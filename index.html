@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九月泌尿系統保健</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #e0f2fe;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .quiz-option {
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .quiz-option:hover {
+            transform: scale(1.03);
+            background-color: #f0f9ff;
+        }
+        .quiz-option.correct {
+            background-color: #d1fae5;
+            border-color: #34d399;
+            animation: pulse-correct 0.8s ease-out;
+        }
+        .quiz-option.wrong {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            animation: shake 0.5s;
+        }
+        @keyframes pulse-correct {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-5px); }
+            40% { transform: translateX(5px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(5px); }
+            100% { transform: translateX(0); }
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+<div class="container mx-auto p-8 bg-white rounded-3xl shadow-lg border-2 border-blue-200">
+    <header class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-blue-800 mb-2">九月泌尿系統<br>保健</h1>
+        <p class="text-xl text-blue-600">中秋佳節到，健康也要顧！</p>
+    </header>
+
+    <main class="space-y-8">
+        <!-- 泌尿系統小知識 -->
+        <section class="card p-6">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-4">九月保健小知識</h2>
+            <ul class="list-disc list-inside space-y-3 text-gray-700 leading-relaxed">
+                <li>
+                    <strong class="text-blue-600">多喝水，但不只喝水：</strong>每日應保持約2000毫升以上的飲水量，幫助身體代謝廢物。避免將含糖飲料或酒類當作主要水分來源，特別是中秋烤肉時的啤酒，過量攝取反而會加重腎臟負擔。
+                </li>
+                <li>
+                    <strong class="text-blue-600">注意飲食，減少負擔：</strong>中秋節的烤肉、月餅等美食，通常含高油、高鹽、高糖。過多的鹽分會使血壓升高並增加腎臟過濾壓力；過多的糖分則可能影響血糖，間接對腎功能造成影響。建議淺嚐即可，並多攝取新鮮蔬果。
+                </li>
+                <li>
+                    <strong class="text-blue-600">不憋尿，及時排空：</strong>無論是工作忙碌或旅途不便，長時間憋尿都會讓細菌在膀胱內滋生，增加尿路感染、膀胱炎的風險。養成每2-3小時定時排尿的好習慣。
+                </li>
+                <li>
+                    <strong class="text-blue-600">適度運動，增強免疫：</strong>規律的運動，如散步、慢跑或游泳，能促進全身血液循環，增強身體免疫力，有助於預防泌尿系統相關疾病。
+                </li>
+                <li>
+                    <strong class="text-blue-600">柚子與藥品的注意事項：</strong>柚子（文旦）與葡萄柚所含的**呋喃香豆素（furanocoumarin）**，會抑制小腸及肝臟的代謝酵素**CYP3A4**，可能導致藥物血中濃度升高，增加發生不良反應的風險。因此，若您有服用降血脂、降血壓、安眠鎮靜或免疫抑制劑等藥物，應避免在服藥前後食用。相對地，其他柑橘類如橘子、柳橙、檸檬等，因不含此類成分，與藥物交互作用較少，可安心食用。
+                    <div class="flex justify-center mt-4">
+                        <button id="show-drugs-btn" class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-full hover:bg-blue-600 transition duration-300 ease-in-out shadow-lg">可能影響的藥物</button>
+                    </div>
+                    <div id="drug-list-container" class="mt-4 p-4 bg-gray-100 rounded-xl hidden">
+                        <h3 class="font-bold text-gray-800 mb-2">可能受到影響的常見藥物類別：</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li><strong>降血脂藥物：</strong>部分史他汀類（Statins），如 atorvastatin (立普妥)。</li>
+                            <li><strong>降血壓藥物：</strong>鈣離子通道阻斷劑（Calcium channel blockers），如 amlodipine。</li>
+                            <li><strong>鎮靜安眠藥物：</strong>部分苯二氮平類（Benzodiazepines），如 diazepam (安定)。</li>
+                            <li><strong>免疫抑制劑：</strong>如 cyclosporine (新體睦)。</li>
+                            <li><strong>心律不整藥物：</strong>如 amiodarone。</li>
+                        </ul>
+                        <p class="text-xs text-gray-500 mt-2">※ 提醒您，這份清單僅為常見範例，實際用藥請務必諮詢醫師或藥師。</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 互動式測驗 -->
+        <section class="card p-6">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-4">泌尿健康小測驗</h2>
+            <div id="quiz-container" class="space-y-6">
+                <!-- 問題會由 JavaScript 動態生成 -->
+            </div>
+            <div id="result-container" class="text-center mt-6 hidden">
+                <p id="result-text" class="text-2xl font-bold"></p>
+                <button id="reset-button" class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">重新測驗</button>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script>
+    const questions = [
+        {
+            question: "何種檢測是評估腎臟功能的主要指標之一，可用來衡量腎絲球過濾率 (GFR)？",
+            options: ["血糖測試", "血壓測量", "肌酸酐 (Creatinine) 血液檢測", "肝功能指數"],
+            answer: "肌酸酐 (Creatinine) 血液檢測"
+        },
+        {
+            question: "長期高血壓或糖尿病控制不佳，可能導致何種泌尿系統疾病？",
+            options: ["攝護腺肥大", "尿路結石", "慢性腎臟病 (CKD)", "膀胱炎"],
+            answer: "慢性腎臟病 (CKD)"
+        },
+        {
+            question: "下列哪一種行為最可能導致尿路感染（UTI），尤其是在女性中常見？",
+            options: ["攝取大量水分", "憋尿", "適度運動", "均衡飲食"],
+            answer: "憋尿"
+        },
+        {
+            question: "高蛋白飲食對腎臟的長期影響為何？",
+            options: ["減輕腎臟負擔", "促進腎絲球過濾率", "增加腎臟過濾壓力，加速腎功能衰退", "有助於腎臟排毒"],
+            answer: "增加腎臟過濾壓力，加速腎功能衰退"
+        },
+        {
+            question: "何種疾病最常與遺傳相關，並導致腎臟囊腫形成和功能逐漸喪失？",
+            options: ["腎結石", "多囊腎", "腎臟發炎", "腎臟癌"],
+            answer: "多囊腎"
+        },
+        {
+            question: "攝護腺肥大最常見的症狀是什麼？",
+            options: ["尿液顏色改變", "夜尿、頻尿、排尿困難", "腰痛", "血尿"],
+            answer: "夜尿、頻尿、排尿困難"
+        },
+        {
+            question: "下列何種飲食習慣有助於預防尿路結石？",
+            options: ["多吃高鹽食物", "多吃富含草酸的食物（如菠菜、巧克力）", "多喝水，減少肉類攝取", "憋尿"],
+            answer: "多喝水，減少肉類攝取"
+        },
+        {
+            question: "若尿液呈現紅色或棕色，且非因食物或藥物影響，最可能的原因是什麼？",
+            options: ["身體水分充足", "尿路感染", "血尿，可能與腎臟或膀胱疾病有關", "正常現象"],
+            answer: "血尿，可能與腎臟或膀胱疾病有關"
+        },
+        {
+            question: "糖尿病患者因長期高血糖可能導致哪種腎臟併發症？",
+            options: ["腎動脈狹窄", "糖尿病腎病變", "急性腎衰竭", "腎囊腫"],
+            answer: "糖尿病腎病變"
+        },
+        {
+            question: "若尿液出現泡沫久久不散，可能代表尿液中含有過多何種物質？",
+            options: ["葡萄糖", "鹽分", "蛋白質", "脂肪"],
+            answer: "蛋白質"
+        }
+    ];
+
+    const quizContainer = document.getElementById('quiz-container');
+    const resultContainer = document.getElementById('result-container');
+    const resultText = document.getElementById('result-text');
+    const resetButton = document.getElementById('reset-button');
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function renderQuestion() {
+        if (currentQuestionIndex >= questions.length) {
+            showResult();
+            return;
+        }
+
+        const q = questions[currentQuestionIndex];
+        const questionHtml = `
+            <div class="question-card p-4 rounded-xl border-2 border-gray-200">
+                <p class="text-lg font-medium text-gray-800 mb-4">${currentQuestionIndex + 1}. ${q.question}</p>
+                <div class="options-grid grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    ${q.options.map(option => `
+                        <div class="quiz-option p-4 border-2 border-gray-200 rounded-xl text-center font-semibold text-gray-600 hover:border-blue-400" onclick="checkAnswer(this, '${option}')">
+                            ${option}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+        quizContainer.innerHTML = questionHtml;
+    }
+
+    function checkAnswer(selectedElement, selectedOption) {
+        const q = questions[currentQuestionIndex];
+        const isCorrect = selectedOption === q.answer;
+        const options = selectedElement.parentElement.querySelectorAll('.quiz-option');
+
+        options.forEach(option => {
+            if (option.innerText === q.answer) {
+                option.classList.add('correct');
+                option.classList.remove('wrong');
+                option.classList.remove('hover:border-blue-400');
+            } else {
+                option.classList.remove('correct');
+                option.classList.add('wrong');
+                option.classList.remove('hover:border-blue-400');
+            }
+            option.onclick = null; // 禁用點擊
+        });
+
+        if (isCorrect) {
+            score++;
+        }
+
+        setTimeout(() => {
+            currentQuestionIndex++;
+            renderQuestion();
+        }, 1500); // 等待1.5秒後進入下一題
+    }
+
+    function showResult() {
+        quizContainer.classList.add('hidden');
+        resultContainer.classList.remove('hidden');
+        let message = '';
+        if (score === questions.length) {
+            message = "恭喜您！全部答對，您是泌尿保健達人！";
+            resultText.classList.add('text-green-600');
+        } else if (score >= questions.length / 2) {
+            message = `不錯喔！您答對了 ${score} 題，繼續努力！`;
+            resultText.classList.add('text-yellow-600');
+        } else {
+            message = `再接再厲！您答對了 ${score} 題，多喝水保健康！`;
+            resultText.classList.add('text-red-600');
+        }
+        resultText.innerText = message;
+    }
+
+    resetButton.onclick = () => {
+        score = 0;
+        currentQuestionIndex = 0;
+        resultContainer.classList.add('hidden');
+        quizContainer.classList.remove('hidden');
+        resultText.className = 'text-2xl font-bold'; // 重設顏色
+        renderQuestion();
+    };
+
+    // 初始渲染
+    renderQuestion();
+
+    // 藥物清單按鈕功能
+    const showDrugsBtn = document.getElementById('show-drugs-btn');
+    const drugListContainer = document.getElementById('drug-list-container');
+
+    showDrugsBtn.addEventListener('click', () => {
+        drugListContainer.classList.toggle('hidden');
+    });
+
+</script>
+
+</body>
+</html>
+
